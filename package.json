@@ -1,6 +1,6 @@
 {
   "homepage": "https://shqln.github.io/algo-vis",
-  "name": "algo-vis",
+  "name": "algo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
