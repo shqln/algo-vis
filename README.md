@@ -1,2 +1,0 @@
-# algo-vis
-Algorithm visualizer
