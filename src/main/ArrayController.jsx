@@ -65,7 +65,7 @@ class ArrayController extends React.Component {
             className="btn btn-warning btn-sm m-2"
             id="btn-test3"
           >
-            Test MergeSort
+            Test
           </button>
         </div>
         <div className="array-controller-options">
@@ -75,7 +75,10 @@ class ArrayController extends React.Component {
           <input
             type="range"
             className="form-range"
+            min="5"
+            max="200"
             id="array-length-range"
+            onChange={this.props.onChangeLength}
           ></input>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ArrayController from "./ArrayController";
+import "bootstrap/dist/css/bootstrap.css";
 
 // settings
 const LEN = 100;
@@ -17,6 +18,7 @@ const BAR_COL_TEST = "MistyRose"; // colour for debugging purpose
 
 class AlgorithmVisualiser extends React.Component {
   state = {
+    length: LEN,
     array: [],
     animations: [],
     solution: [],
@@ -32,9 +34,8 @@ class AlgorithmVisualiser extends React.Component {
           onMergeSort={this.mergeSort}
           onTestCss={this.testCss}
           onTestCss2={this.testCss2}
-          onTest={() =>
-            console.log(this.debugSort(this.mergeSortInPlace, [0, LEN]))
-          }
+          onTest={this.handleTest}
+          onChangeLength={this.handleChangeLength}
         />
         <div className="array-container">
           <div
@@ -59,17 +60,29 @@ class AlgorithmVisualiser extends React.Component {
     this.resetArray();
   };
 
+  handleTest = () => {
+    console.log("w", window.innerWidth);
+    console.log("h", window.innerHeight);
+  };
   // initialises the array and fill it with random numebers
   resetArray = () => {
     const array = this.generateArray();
     const solution = [...array].sort((a, b) => a - b);
     this.setState({ array, animations: [], solution });
     this.drawInPlace();
+    this.setState({ array, animations: [], solution });
+    this.drawInPlace();
+  };
+
+  setLength = (newLen) => {
+    this.state.length = newLen;
+    this.setState(this.state);
   };
 
   generateArray = () => {
     const array = [];
-    for (var i = 0; i < LEN; i++) {
+    let n = this.state.length;
+    for (var i = 0; i < n; i++) {
       array.push(this.randIntBetween(MIN, MAX));
     }
     return array;
@@ -205,7 +218,8 @@ class AlgorithmVisualiser extends React.Component {
   bubbleSort_ = (array) => {
     let swapped = true;
     let passes = 0;
-    while (swapped && passes < LEN) {
+    let n = this.state.length;
+    while (swapped && passes < n) {
       passes++;
       swapped = false;
       // for each element, compare with the next
@@ -417,6 +431,12 @@ class AlgorithmVisualiser extends React.Component {
   getColour = (i) => {
     let bars = document.getElementsByClassName("array-bar");
     return bars[i].style.backgroundColor;
+  };
+
+  handleChangeLength = (evnt) => {
+    let newLen = parseInt(evnt.target.value);
+    this.setLength(newLen);
+    this.resetArray();
   };
 }
 export default AlgorithmVisualiser;
