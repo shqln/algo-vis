@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/algo-vis/static/css/main.d03f63fe.chunk.css",
-    "main.js": "/algo-vis/static/js/main.3bc38f1d.chunk.js",
-    "main.js.map": "/algo-vis/static/js/main.3bc38f1d.chunk.js.map",
+    "main.css": "/algo-vis/static/css/main.eb3f5a7e.chunk.css",
+    "main.js": "/algo-vis/static/js/main.7985117e.chunk.js",
+    "main.js.map": "/algo-vis/static/js/main.7985117e.chunk.js.map",
     "runtime-main.js": "/algo-vis/static/js/runtime-main.e6d6e377.js",
     "runtime-main.js.map": "/algo-vis/static/js/runtime-main.e6d6e377.js.map",
     "static/css/2.95f25948.chunk.css": "/algo-vis/static/css/2.95f25948.chunk.css",
@@ -10,14 +10,14 @@
     "static/js/2.a659f5f5.chunk.js.map": "/algo-vis/static/js/2.a659f5f5.chunk.js.map",
     "index.html": "/algo-vis/index.html",
     "static/css/2.95f25948.chunk.css.map": "/algo-vis/static/css/2.95f25948.chunk.css.map",
-    "static/css/main.d03f63fe.chunk.css.map": "/algo-vis/static/css/main.d03f63fe.chunk.css.map",
+    "static/css/main.eb3f5a7e.chunk.css.map": "/algo-vis/static/css/main.eb3f5a7e.chunk.css.map",
     "static/js/2.a659f5f5.chunk.js.LICENSE.txt": "/algo-vis/static/js/2.a659f5f5.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e6d6e377.js",
     "static/css/2.95f25948.chunk.css",
     "static/js/2.a659f5f5.chunk.js",
-    "static/css/main.d03f63fe.chunk.css",
-    "static/js/main.3bc38f1d.chunk.js"
+    "static/css/main.eb3f5a7e.chunk.css",
+    "static/js/main.7985117e.chunk.js"
   ]
 }
