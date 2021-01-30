@@ -76,6 +76,7 @@ class ArrayController extends React.Component {
             type="range"
             className="form-range"
             min="5"
+            start="100"
             max="200"
             id="array-length-range"
             onChange={this.props.onChangeLength}

@@ -9,6 +9,8 @@ const MAX = 500;
 const MIN = 5;
 const SPD = 100; // multiplier
 const DELAY = 1 * (1 / SPD); // ms
+const BAR_CONTAINER_W = 1000; // px
+const MARGIN = 4; // px
 
 const BAR_COL_DFLT = "AliceBlue"; // default colour
 const BAR_COL_SWAP = "Orchid"; // colour when swapping
@@ -19,6 +21,7 @@ const BAR_COL_TEST = "MistyRose"; // colour for debugging purpose
 class AlgorithmVisualiser extends React.Component {
   state = {
     length: LEN,
+    barWidth: 1,
     array: [],
     animations: [],
     solution: [],
@@ -47,7 +50,10 @@ class AlgorithmVisualiser extends React.Component {
             <div
               className="array-bar"
               key={idx}
-              style={{ height: `${num}px` }}
+              style={{
+                height: `${num}px`,
+                width: `${this.state.barWidth}px`,
+              }}
             ></div>
           ))}
         </div>
@@ -57,26 +63,43 @@ class AlgorithmVisualiser extends React.Component {
 
   // reset the array when the component is created
   componentDidMount = () => {
+    this.setLength(LEN);
     this.resetArray();
   };
 
   handleTest = () => {
     console.log("w", window.innerWidth);
     console.log("h", window.innerHeight);
+    console.log(
+      "container",
+      document.getElementsByClassName("array-container")
+    );
   };
   // initialises the array and fill it with random numebers
   resetArray = () => {
     const array = this.generateArray();
     const solution = [...array].sort((a, b) => a - b);
-    this.setState({ array, animations: [], solution });
-    this.drawInPlace();
-    this.setState({ array, animations: [], solution });
-    this.drawInPlace();
+    this.setState({ array, animations: [], solution }, () => {
+      this.drawInPlace();
+    });
+    // let debug1 = this.state.array,
+    //   debug2 = this.state.solution;
+    // console.log("state array:", debug1, "state solution: ", debug2);
   };
 
   setLength = (newLen) => {
     this.state.length = newLen;
     this.setState(this.state);
+    this.setWidth(newLen);
+  };
+
+  // only called when length is changed
+  setWidth = (newLength) => {
+    if (newLength === undefined) {
+      newLength = this.state.length;
+    }
+    let w = Math.floor(BAR_CONTAINER_W / newLength) - MARGIN;
+    this.setState({ barWidth: w > 1 ? w : 1 });
   };
 
   generateArray = () => {
@@ -99,10 +122,10 @@ class AlgorithmVisualiser extends React.Component {
   // sorts the array ascendingly
   sortArray = () => {
     let { array } = this.state;
-    console.log(array);
     array = array.sort((a, b) => a - b);
-    this.setState({ array });
-    this.drawInPlace();
+    this.setState({ array }, () => {
+      this.drawInPlace();
+    });
   };
 
   // tests something about the css
@@ -321,8 +344,9 @@ class AlgorithmVisualiser extends React.Component {
   animate = () => {
     let { animations } = this.state;
     animations.reverse();
-    this.setState({ animations });
-    this.animate_();
+    this.setState({ animations }, () => {
+      this.animate_();
+    });
   };
 
   // recursive
@@ -347,11 +371,12 @@ class AlgorithmVisualiser extends React.Component {
       colB = this.getColour(b);
     this.changeColour(BAR_COL_SWAP, [a, b]);
     this.doSwap(this.state.array, a, b);
-    this.setState(this.state);
-    setTimeout(() => {
-      this.changeColour(colA, [a]);
-      this.changeColour(colB, [b]);
-    }, DELAY);
+    this.setState(this.state, () => {
+      setTimeout(() => {
+        this.changeColour(colA, [a]);
+        this.changeColour(colB, [b]);
+      }, DELAY);
+    });
   };
 
   // animation for a comparison
