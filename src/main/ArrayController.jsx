@@ -17,7 +17,7 @@ class ArrayController extends React.Component {
         <div className="array-controller-options">
           <button
             onClick={this.props.onSort}
-            className="btn btn-primary btn-sm m-2"
+            className="btn btn-info btn-sm m-2"
             id="btn-sort1"
           >
             Sort!
@@ -26,7 +26,7 @@ class ArrayController extends React.Component {
         <div className="array-controller-options">
           <button
             onClick={this.props.onBubbleSort}
-            className="btn btn-primary btn-sm m-2"
+            className="btn btn-info btn-sm m-2"
             id="btn-sort2"
           >
             Bubble Sort
@@ -35,7 +35,7 @@ class ArrayController extends React.Component {
         <div className="array-controller-options">
           <button
             onClick={this.props.onMergeSort}
-            className="btn btn-primary btn-sm m-2"
+            className="btn btn-info btn-sm m-2"
             id="btn-sort3"
           >
             Merge Sort
@@ -43,11 +43,20 @@ class ArrayController extends React.Component {
         </div>
         <div className="array-controller-options">
           <button
-            onClick={this.props.onTestCss}
+            onClick={this.props.onSelectionSort}
             className="btn btn-info btn-sm m-2"
-            id="btn-test1"
+            id="btn-sort4"
           >
-            MistyRose
+            Selection Sort
+          </button>
+        </div>
+        <div className="array-controller-options">
+          <button
+            onClick={this.props.onQuickSort}
+            className="btn btn-info btn-sm m-2"
+            id="btn-sort5"
+          >
+            Quick Sort
           </button>
         </div>
         <div className="array-controller-options">

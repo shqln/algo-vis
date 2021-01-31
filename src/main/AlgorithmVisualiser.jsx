@@ -7,8 +7,8 @@ import "bootstrap/dist/css/bootstrap.css";
 const LEN = 100;
 const MAX = 500;
 const MIN = 5;
-const SPD = 100; // multiplier
-const DELAY = 1 * (1 / SPD); // ms
+const SPD = 1000; // multiplier
+const DELAY = 1000 / SPD; // ms
 const BAR_CONTAINER_W = 1000; // px
 const MARGIN = 4; // px
 
@@ -35,6 +35,8 @@ class AlgorithmVisualiser extends React.Component {
           onSort={this.sortArray}
           onBubbleSort={this.bubbleSort}
           onMergeSort={this.mergeSort}
+          onSelectionSort={this.selectionSort}
+          onQuickSort={this.quickSort}
           onTestCss={this.testCss}
           onTestCss2={this.testCss2}
           onTest={this.handleTest}
@@ -68,12 +70,13 @@ class AlgorithmVisualiser extends React.Component {
   };
 
   handleTest = () => {
-    console.log("w", window.innerWidth);
-    console.log("h", window.innerHeight);
-    console.log(
-      "container",
-      document.getElementsByClassName("array-container")
-    );
+    // console.log("w", window.innerWidth);
+    // console.log("h", window.innerHeight);
+    // console.log(
+    //   "container",
+    //   document.getElementsByClassName("array-container")
+    // );
+    this.debugSort(this.selectionSort_);
   };
   // initialises the array and fill it with random numebers
   resetArray = () => {
@@ -236,7 +239,33 @@ class AlgorithmVisualiser extends React.Component {
     return this.mergeInPlace(array, l, mid - 1, r - 1);
   };
 
-  quickSort = () => {};
+  quickSort = () => {
+    let { array } = this.state;
+    this.quickSort_([...array], 0, array.length - 1);
+    this.animate();
+  };
+
+  quickSort_ = (array, lo, hi) => {
+    if (hi > lo) {
+      let pivot = this.partition(array, lo, hi);
+      this.quickSort_(array, lo, pivot - 1);
+      this.quickSort_(array, pivot + 1, hi);
+    }
+    return array;
+  };
+
+  partition = (array, lo, hi) => {
+    let pivot = hi;
+    let i = lo - 1;
+    for (var j = lo; j < hi; j++) {
+      if (this.doCompare(array, j, pivot, true) === -1) {
+        i++;
+        this.doSwap(array, i, j, true);
+      }
+    }
+    this.doSwap(array, i + 1, pivot, true);
+    return i + 1;
+  };
 
   bubbleSort_ = (array) => {
     let swapped = true;
@@ -263,6 +292,25 @@ class AlgorithmVisualiser extends React.Component {
 
   bubbleSort = () => {
     let sorted = this.bubbleSort_([...this.state.array]);
+    this.animate();
+  };
+
+  // TODO selectionSort
+  selectionSort_ = (array) => {
+    for (var i = 0; i < array.length - 1; i++) {
+      let minIdx = i;
+      for (var k = i; k < array.length; k++) {
+        if (this.doCompare(array, minIdx, k, true) === 1) {
+          minIdx = k;
+        }
+      }
+      this.doSwap(array, i, minIdx, true);
+    }
+    return array;
+  };
+
+  selectionSort = () => {
+    this.selectionSort_([...this.state.array]);
     this.animate();
   };
 
@@ -325,7 +373,12 @@ class AlgorithmVisualiser extends React.Component {
       let a = this.generateArray(),
         b = [...a],
         nativeSorted = a.sort((a, b) => a - b),
+        customSorted = undefined;
+      if (args === undefined) {
+        customSorted = sortFn(b);
+      } else {
         customSorted = sortFn(b, ...args);
+      }
       if (this.equalArray(nativeSorted, customSorted)) {
         console.log("sort successful");
       } else {
